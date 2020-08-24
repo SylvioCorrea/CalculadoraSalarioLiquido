@@ -54,8 +54,8 @@ namespace CalculadoraSalarioLiquido.Utils
             double descontoInss = CalculaDescontoInss(salario);
             salarioLiquido -= descontoInss;
 
-            double descontoDependentesTotal = Math.Min(dependentes * DeducaoPorDependente, salarioLiquido);
-            double salarioBaseIRRF = salarioLiquido - descontoDependentesTotal;
+            double deducaoDependentesTotal = CalculaDeducaoPorDependentes(salario, dependentes);
+            double salarioBaseIRRF = salarioLiquido - deducaoDependentesTotal;
 
             double descontoIRRF = CalculaDescontoIRRF(salarioBaseIRRF);
             salarioLiquido -= descontoIRRF;
@@ -64,7 +64,7 @@ namespace CalculadoraSalarioLiquido.Utils
                 salarioLiquido,
                 salario,
                 descontoInss,
-                descontoDependentesTotal,
+                deducaoDependentesTotal,
                 descontoIRRF
             );
         }
@@ -94,6 +94,11 @@ namespace CalculadoraSalarioLiquido.Utils
             }
 
             return desconto;
+        }
+
+        public double CalculaDeducaoPorDependentes(double salario, int dependentes)
+        {
+            return Math.Min(dependentes * DeducaoPorDependente, salario);
         }
 
         //Entrada salario deve ter sido previamente deduzida de contribuição ao INSS e desconto por dependentes.
