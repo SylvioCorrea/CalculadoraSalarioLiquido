@@ -13,7 +13,7 @@ A saída é um json no seguinte formato:
   "salarioLiquido": 0,
   "salarioBruto": 0,
   "descontoInss": 0,
-  "descontoDependentes": 0,
+  "deducaoDependentes": 0,
   "descontoIRRF": 0
 }
 ```
