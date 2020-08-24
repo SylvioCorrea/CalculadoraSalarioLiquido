@@ -14,12 +14,15 @@ namespace CalculadoraSalarioLiquido.Utils
         public List<double> FaixasINSS { get; set; }
         public List<double> AliquotasINSS { get; set; }
         public double TetoInss { get; set; }
-        public double DescontoPorDependente { get; set; }
+
+        public double DeducaoPorDependente { get; set; }
+
         public List<double> FaixasIRRF { get; set; }
         public List<double> AliquotasIRRF { get; set; }
+
         public List<double> ParcelasDedutiveis { get; set; }
 
-
+        //Inicia a calculadora com valores padrão.
         public Calculadora()
         {
             FaixasINSS = new List<double>();
@@ -28,9 +31,9 @@ namespace CalculadoraSalarioLiquido.Utils
             AliquotasINSS = new List<double>();
             AliquotasINSS.AddRange(new double[] { 0.075, 0.09, 0.12, 0.14 });
 
-            TetoInss = 713;
+            TetoInss = 713.1;
             
-            DescontoPorDependente = 189.59;
+            DeducaoPorDependente = 189.59;
             
             FaixasIRRF = new List<double>();
             FaixasIRRF.AddRange(new double[] { 1903.98, 2826.65, 3751.05, 4664.68 });
@@ -42,7 +45,8 @@ namespace CalculadoraSalarioLiquido.Utils
             ParcelasDedutiveis.AddRange(new double[] { 0, 142.8, 354.8, 636.13, 869.36 });
         }
 
-        
+        //Requer: salario >= 0
+        //Requer: dependentes >= 0
         public ResultadoCalculadora CalculaSalarioLiquido(double salario, int dependentes)
         {
             double salarioLiquido = salario;
@@ -50,7 +54,7 @@ namespace CalculadoraSalarioLiquido.Utils
             double descontoInss = CalculaDescontoInss(salario);
             salarioLiquido -= descontoInss;
 
-            double descontoDependentesTotal = Math.Min(dependentes * DescontoPorDependente, salarioLiquido);
+            double descontoDependentesTotal = Math.Min(dependentes * DeducaoPorDependente, salarioLiquido);
             double salarioBaseIRRF = salarioLiquido - descontoDependentesTotal;
 
             double descontoIRRF = CalculaDescontoIRRF(salarioBaseIRRF);

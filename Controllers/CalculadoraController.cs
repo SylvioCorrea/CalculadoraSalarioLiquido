@@ -28,7 +28,8 @@ namespace CalculadoraSalarioLiquido.Controllers
         [HttpGet]
         public IActionResult Get([FromQuery]double salario, int dependentes)
         {
-            if (salario < 0 || dependentes < 0) return BadRequest("Entrada inválida");
+            if (salario < 0 || dependentes < 0) return BadRequest("Entrada inválida. Salário e dependentes não podem ser números negativos.");
+
             ResultadoCalculadora res = _calculadora.CalculaSalarioLiquido(salario, dependentes);
             return Ok(res);
         }
